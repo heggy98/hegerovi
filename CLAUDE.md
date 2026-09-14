@@ -2,6 +2,12 @@
 
 Osobní projekt (svatební web + RSVP systém), nesouvisí s Astratexem ani žádnou firemní prací.
 
+## Nasazení
+
+- Testovací adresa (Azure Static Web Apps, uživatelův soukromý účet): https://ashy-meadow-047072510.5.azurestaticapps.net/
+- Auto-deploy z `main` přes GitHub Actions workflow, který si Azure sám přidal do repa při založení Static Web App.
+- Cosmos DB zatím NENÍ založená — backend běží na `InMemoryDataStore`, takže RSVP data se ztratí při restartu API. Až bude Cosmos DB hotová, přepnout podle sekce Architektura níže.
+
 ## Tvrdá pravidla
 
 - Nikdy nepoužívat žádné zdroje od Astratexu — žádné firemní NuGet feedy, žádný Astratex Azure
