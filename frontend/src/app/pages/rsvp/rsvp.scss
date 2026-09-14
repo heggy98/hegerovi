@@ -1,0 +1,15 @@
+.attend-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .attend-toggle {
+    flex-direction: row;
+  }
+
+  .attend-toggle .btn {
+    flex: 1;
+  }
+}

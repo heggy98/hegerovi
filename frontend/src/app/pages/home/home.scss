@@ -1,0 +1,51 @@
+.hero {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  text-align: center;
+  padding: 3rem 1.25rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin: 0;
+}
+
+.date {
+  color: var(--color-primary-dark);
+  font-size: 1.1rem;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.timeline li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.timeline li:last-child {
+  border-bottom: none;
+}
+
+.time {
+  display: inline-block;
+  min-width: 3.5rem;
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 5rem 2rem;
+  }
+}

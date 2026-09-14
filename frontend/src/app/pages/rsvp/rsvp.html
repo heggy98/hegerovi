@@ -1,0 +1,79 @@
+<div class="container">
+  @if (loading()) {
+    <p>Načítání pozvánky…</p>
+  } @else if (notFound()) {
+    <div class="card">
+      <h1>Pozvánku jsme nenašli</h1>
+      <p>Zkontrolujte prosím odkaz z pozvánky nebo nás kontaktujte.</p>
+    </div>
+  } @else if (submitted()) {
+    <div class="card">
+      <h1>Děkujeme!</h1>
+      @if (attending) {
+        <p>Vaše účast je potvrzená. Těšíme se na vás {{ info()?.guestName }}!</p>
+      } @else {
+        <p>Mrzí nás, že nedorazíte. Díky za odpověď.</p>
+      }
+      <button class="btn btn-secondary" (click)="editAgain()">Chci odpověď upravit</button>
+    </div>
+  } @else {
+    <div class="card">
+      <h1>Potvrzení účasti</h1>
+      @if (info()?.guestName) {
+        <p>Ahoj, {{ info()?.guestName }}!</p>
+      }
+
+      <div class="field">
+        <label>Dorazíte na svatbu?</label>
+        <div class="attend-toggle">
+          <button
+            type="button"
+            class="btn"
+            [class.btn-primary]="attending"
+            [class.btn-secondary]="!attending"
+            (click)="attending = true"
+          >
+            Ano, dorazím
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [class.btn-primary]="!attending"
+            [class.btn-secondary]="attending"
+            (click)="attending = false"
+          >
+            Bohužel ne
+          </button>
+        </div>
+      </div>
+
+      @if (attending) {
+        <div class="field">
+          <label for="peopleCount">Počet osob{{ info()?.plusOneAllowed ? ' (včetně doprovodu)' : '' }}</label>
+          <input id="peopleCount" type="number" min="1" [(ngModel)]="peopleCount" name="peopleCount" />
+        </div>
+
+        <div class="field">
+          <label for="menu">Preference menu</label>
+          <select id="menu" [(ngModel)]="menuPreference" name="menu">
+            <option value="">Vyberte…</option>
+            <option value="Maso">Maso</option>
+            <option value="Vegetariánské">Vegetariánské</option>
+            <option value="Veganské">Veganské</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="allergies">Alergie / poznámka</label>
+          <textarea id="allergies" [(ngModel)]="allergies" name="allergies"></textarea>
+        </div>
+      }
+
+      @if (error()) {
+        <p class="error-text">{{ error() }}</p>
+      }
+
+      <button class="btn btn-primary" (click)="submit()">Odeslat odpověď</button>
+    </div>
+  }
+</div>

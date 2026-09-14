@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/Hegerovi.Backend.csproj" />
+  </Folder>
+  <Folder Name="/tools/" />
+  <Folder Name="/tools/QrGenerator/">
+    <Project Path="tools/QrGenerator/Hegerovi.QrGenerator.csproj" />
+  </Folder>
+</Solution>

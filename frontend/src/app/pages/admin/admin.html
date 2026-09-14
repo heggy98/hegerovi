@@ -1,0 +1,125 @@
+<div class="container">
+  @if (!auth.isLoggedIn()) {
+    <div class="card login-card">
+      <h1>Admin přihlášení</h1>
+      <div class="field">
+        <label for="apiKey">Přístupový klíč</label>
+        <input id="apiKey" type="password" [(ngModel)]="apiKeyInput" name="apiKey" (keyup.enter)="login()" />
+      </div>
+      @if (loginError()) {
+        <p class="error-text">{{ loginError() }}</p>
+      }
+      <button class="btn btn-primary" (click)="login()">Přihlásit</button>
+    </div>
+  } @else {
+    <div class="admin-header">
+      <h1>Administrace</h1>
+      <button class="btn btn-secondary" (click)="logout()">Odhlásit</button>
+    </div>
+
+    <div class="tabs">
+      <button class="btn" [class.btn-primary]="tab() === 'guests'" [class.btn-secondary]="tab() !== 'guests'" (click)="selectTab('guests')">
+        Hosté
+      </button>
+      <button class="btn" [class.btn-primary]="tab() === 'rsvp'" [class.btn-secondary]="tab() !== 'rsvp'" (click)="selectTab('rsvp')">
+        RSVP přehled
+      </button>
+    </div>
+
+    @if (tab() === 'guests') {
+      <div class="card">
+        <h2>Přidat hosta</h2>
+        <div class="field">
+          <label for="guestName">Jméno</label>
+          <input id="guestName" type="text" [(ngModel)]="newGuestName" name="guestName" />
+        </div>
+        <div class="field">
+          <label for="guestGroup">Skupina</label>
+          <input id="guestGroup" type="text" [(ngModel)]="newGuestGroup" name="guestGroup" placeholder="rodina / přátelé…" />
+        </div>
+        <div class="field field-checkbox">
+          <label>
+            <input type="checkbox" [(ngModel)]="newGuestPlusOne" name="guestPlusOne" />
+            Povolen doprovod (plus-one)
+          </label>
+        </div>
+        <button class="btn btn-primary" (click)="addGuest()">Přidat hosta</button>
+      </div>
+
+      <div class="card">
+        <h2>Import z CSV</h2>
+        <p class="muted">Formát řádku: Jméno,Skupina,Ano/Ne (plus-one), bez hlavičky.</p>
+        <input type="file" accept=".csv,text/csv" (change)="onCsvSelected($event)" />
+        @if (loading()) {
+          <p>Importuji…</p>
+        }
+      </div>
+
+      <div class="card">
+        <h2>Seznam hostů ({{ guests().length }})</h2>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Jméno</th>
+                <th>Skupina</th>
+                <th>Plus-one</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (guest of guests(); track guest.id) {
+                <tr>
+                  <td>{{ guest.name }}</td>
+                  <td>{{ guest.group }}</td>
+                  <td>{{ guest.plusOneAllowed ? 'Ano' : 'Ne' }}</td>
+                  <td><button class="btn btn-secondary" (click)="deleteGuest(guest.id)">Smazat</button></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    } @else {
+      <div class="card">
+        <div class="admin-header">
+          <h2>RSVP odpovědi ({{ invitations().length }})</h2>
+          <button class="btn btn-secondary" (click)="exportCsv()">Export CSV</button>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th>Jméno</th>
+                <th>Stav</th>
+                <th>Osob</th>
+                <th>Menu</th>
+                <th>Alergie</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (invitation of invitations(); track invitation.id) {
+                <tr>
+                  <td>{{ invitation.guestName }}</td>
+                  <td>
+                    <span
+                      class="badge"
+                      [class.badge-pending]="invitation.status === 'Pending'"
+                      [class.badge-confirmed]="invitation.status === 'Confirmed'"
+                      [class.badge-declined]="invitation.status === 'Declined'"
+                    >
+                      {{ invitation.status }}
+                    </span>
+                  </td>
+                  <td>{{ invitation.peopleCount }}</td>
+                  <td>{{ invitation.menuPreference }}</td>
+                  <td>{{ invitation.allergies }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    }
+  }
+</div>
