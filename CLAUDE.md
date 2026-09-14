@@ -4,11 +4,13 @@ Osobní projekt (svatební web + RSVP systém), nesouvisí s Astratexem ani žá
 
 ## Tvrdá pravidla
 
-- Nikdy nepoužívat žádné zdroje od Astratexu — žádné firemní NuGet feedy, žádné Azure účty/resource
-  navázané na zaměstnavatele. `NuGet.config` v rootu je záměrně omezený jen na `nuget.org`.
+- Nikdy nepoužívat žádné zdroje od Astratexu — žádné firemní NuGet feedy, žádný Astratex Azure
+  tenant/účet. `NuGet.config` v rootu je záměrně omezený jen na `nuget.org`.
+- Azure samotné vadit nemá — projekt se nasazuje na Azure pod uživatelovým SOUKROMÝM účtem
+  (ne pracovním Astratex tenantem). Přihlašování do Azure a zakládání resources dělá uživatel
+  sám v portálu (vyžaduje jeho vlastní přihlášení), Claude nespouští `az login` ani neinstaluje
+  Azure CLI bez výslovného souhlasu.
 - Nedívat se do ostatních projektů v `C:\source` (jsou to nesouvisející firemní repa).
-- Zatím žádné Azure resources (Functions, Cosmos DB, Static Web Apps) — vše lokálně, dokud
-  uživatel výslovně neřekne jinak.
 
 ## Architektura
 
